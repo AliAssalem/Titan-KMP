@@ -21,6 +21,11 @@ import app.ali.titan.screens.movies.domain.GetPopularMoviesUseCase
 import app.ali.titan.screens.movies.domain.GetTrendingMoviesUseCase
 import app.ali.titan.screens.movies.domain.MoviesRepository
 import app.ali.titan.screens.movies.domain.SearchMoviesUseCase
+import app.ali.titan.screens.person.PersonDetailViewModel
+import app.ali.titan.screens.person.PersonFilmographyViewModel
+import app.ali.titan.screens.person.data.PersonRepositoryImpl
+import app.ali.titan.screens.person.domain.GetPersonDetailUseCase
+import app.ali.titan.screens.person.domain.PersonRepository
 import app.ali.titan.screens.watchlist.WatchlistViewModel
 import app.ali.titan.screens.watchlist.data.WatchlistRepositoryImpl
 import app.ali.titan.screens.watchlist.domain.ObserveIsInWatchlistUseCase
@@ -88,6 +93,7 @@ private val appModule =
         single<ConfigurationRepository> { ConfigurationRepositoryImpl(get()) }
         single<SettingsPreferencesStore> { SettingsPreferencesStoreImpl(get()) }
         single<MoviesRepository> { MoviesRepositoryImpl(get(), get()) }
+        single<PersonRepository> { PersonRepositoryImpl(get()) }
 
         single { MovieUiMapper(get()) }
         single { LoadConfigurationUseCase(get(), get()) }
@@ -110,6 +116,8 @@ private val appModule =
         }
         single { get<SmoovieDatabase>().watchlistDao() }
         single<WatchlistRepository> { WatchlistRepositoryImpl(get()) }
+
+        single { GetPersonDetailUseCase(get(), get()) }
 
         single { ObserveIsInWatchlistUseCase(get()) }
         single { ObserveWatchlistUseCase(get()) }
@@ -137,7 +145,8 @@ private val appModule =
                 toggleWatchlistUseCase = get(),
             )
         }
-
+        viewModel { (personId: Int) -> PersonDetailViewModel(personId, get()) }
+        viewModel { (personId: Int) -> PersonFilmographyViewModel(personId, get()) }
         viewModel { WatchlistViewModel(get(), get()) }
 
     }

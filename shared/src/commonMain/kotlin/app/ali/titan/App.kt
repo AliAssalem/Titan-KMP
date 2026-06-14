@@ -36,6 +36,11 @@ import app.ali.titan.screens.movies.MovieDetailScreen
 import app.ali.titan.screens.movies.MovieDetailViewModel
 import app.ali.titan.screens.movies.MoviesScreen
 import app.ali.titan.screens.movies.MoviesViewModel
+import app.ali.titan.screens.person.PersonDetailScreen
+import app.ali.titan.screens.person.PersonDetailViewModel
+import app.ali.titan.screens.person.PersonFilmographyMediaType
+import app.ali.titan.screens.person.PersonFilmographyScreen
+import app.ali.titan.screens.person.PersonFilmographyViewModel
 import app.ali.titan.screens.watchlist.WatchlistScreen
 import app.ali.titan.screens.watchlist.WatchlistViewModel
 import app.ali.titan.theme.SmoovieTheme
@@ -155,50 +160,50 @@ fun App() {
                             onPersonClick = { person -> navController.navigate(person.toRoute()) },
                         )
                     }
-//
-//                    composable<PersonDetailRoute> { entry ->
-//                        val route: PersonDetailRoute = entry.toRoute()
-//                        val viewModel: PersonDetailViewModel =
-//                            koinViewModel(
-//                                key = "person_${route.id}",
-//                                parameters = { parametersOf(route.id) },
-//                            )
-//                        PersonDetailScreen(
-//                            viewModel = viewModel,
-//                            person = route.toUiModel(),
-//                            onBack = { navController.navigateUp() },
-//                            onMovieClick = { movie -> navController.navigate(movie.toRoute()) },
-//                            onTvShowClick = { show -> navController.navigate(show.toRoute()) },
-//                            onViewAllFilmography = { mediaType ->
-//                                navController.navigate(
-//                                    PersonFilmographyRoute(
-//                                        personId = route.id,
-//                                        personName = route.name,
-//                                        mediaType = mediaType.name,
-//                                    ),
-//                                )
-//                            },
-//                        )
-//                    }
-//
-//                    composable<PersonFilmographyRoute> { entry ->
-//                        val route: PersonFilmographyRoute = entry.toRoute()
-//                        val mediaType = PersonFilmographyMediaType.valueOf(route.mediaType)
-//                        val viewModel: PersonFilmographyViewModel =
-//                            koinViewModel(
-//                                key = "person_filmography_${route.personId}_${route.mediaType}",
-//                                parameters = { parametersOf(route.personId) },
-//                            )
-//                        PersonFilmographyScreen(
-//                            viewModel = viewModel,
-//                            personName = route.personName,
-//                            mediaType = mediaType,
-//                            onBack = { navController.navigateUp() },
-//                            onMovieClick = { movie -> navController.navigate(movie.toRoute()) },
-//                            onTvShowClick = { show -> navController.navigate(show.toRoute()) },
-//                        )
-//                    }
-//
+
+                    composable<PersonDetailRoute> { entry ->
+                        val route: PersonDetailRoute = entry.toRoute()
+                        val viewModel: PersonDetailViewModel =
+                            koinViewModel(
+                                key = "person_${route.id}",
+                                parameters = { parametersOf(route.id) },
+                            )
+                        PersonDetailScreen(
+                            viewModel = viewModel,
+                            person = route.toUiModel(),
+                            onBack = { navController.navigateUp() },
+                            onMovieClick = { movie -> navController.navigate(movie.toRoute()) },
+                            onTvShowClick = { show -> navController.navigate(show.toRoute()) },
+                            onViewAllFilmography = { mediaType ->
+                                navController.navigate(
+                                    PersonFilmographyRoute(
+                                        personId = route.id,
+                                        personName = route.name,
+                                        mediaType = mediaType.name,
+                                    ),
+                                )
+                            },
+                        )
+                    }
+
+                    composable<PersonFilmographyRoute> { entry ->
+                        val route: PersonFilmographyRoute = entry.toRoute()
+                        val mediaType = PersonFilmographyMediaType.valueOf(route.mediaType)
+                        val viewModel: PersonFilmographyViewModel =
+                            koinViewModel(
+                                key = "person_filmography_${route.personId}_${route.mediaType}",
+                                parameters = { parametersOf(route.personId) },
+                            )
+                        PersonFilmographyScreen(
+                            viewModel = viewModel,
+                            personName = route.personName,
+                            mediaType = mediaType,
+                            onBack = { navController.navigateUp() },
+                            onMovieClick = { movie -> navController.navigate(movie.toRoute()) },
+                            onTvShowClick = { show -> navController.navigate(show.toRoute()) },
+                        )
+                    }
+
 //                    composable<TvShowDetailRoute> { entry ->
 //                        val route: TvShowDetailRoute = entry.toRoute()
 //                        val presentLabel = stringResource(Res.string.tv_show_year_range_present)
