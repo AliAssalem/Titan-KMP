@@ -1,7 +1,6 @@
 package app.ali.titan.screens.movies.domain
 
 import app.ali.titan.screens.movies.MovieUiMapper
-import app.ali.titan.screens.movies.domain.MoviesRepository
 
 class GetPopularMoviesUseCase(
     private val repository: MoviesRepository,

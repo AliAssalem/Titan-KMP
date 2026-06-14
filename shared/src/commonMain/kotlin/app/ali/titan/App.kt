@@ -21,7 +21,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination
@@ -33,8 +32,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import app.ali.titan.screens.movies.MovieDetailScreen
+import app.ali.titan.screens.movies.MovieDetailViewModel
 import app.ali.titan.screens.movies.MoviesScreen
 import app.ali.titan.screens.movies.MoviesViewModel
+import app.ali.titan.screens.watchlist.WatchlistScreen
+import app.ali.titan.screens.watchlist.WatchlistViewModel
 import app.ali.titan.theme.SmoovieTheme
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -112,21 +115,21 @@ fun App() {
 //                            onTvShowClick = { show -> navController.navigate(show.toRoute()) },
 //                        )
 //                    }
-//
-//                    composable<WatchlistRoute>(
-//                        enterTransition = { if (initialState.destination.isTopLevelTab()) EnterTransition.None else null },
-//                        exitTransition = { if (targetState.destination.isTopLevelTab()) ExitTransition.None else null },
-//                        popEnterTransition = { if (initialState.destination.isTopLevelTab()) EnterTransition.None else null },
-//                        popExitTransition = { if (targetState.destination.isTopLevelTab()) ExitTransition.None else null },
-//                    ) {
-//                        val viewModel: WatchlistViewModel = koinViewModel()
-//                        WatchlistScreen(
-//                            viewModel = viewModel,
-//                            onMovieClick = { movie -> navController.navigate(movie.toRoute()) },
-//                            onTvShowClick = { show -> navController.navigate(show.toRoute()) },
-//                        )
-//                    }
-//
+
+                    composable<WatchlistRoute>(
+                        enterTransition = { if (initialState.destination.isTopLevelTab()) EnterTransition.None else null },
+                        exitTransition = { if (targetState.destination.isTopLevelTab()) ExitTransition.None else null },
+                        popEnterTransition = { if (initialState.destination.isTopLevelTab()) EnterTransition.None else null },
+                        popExitTransition = { if (targetState.destination.isTopLevelTab()) ExitTransition.None else null },
+                    ) {
+                        val viewModel: WatchlistViewModel = koinViewModel()
+                        WatchlistScreen(
+                            viewModel = viewModel,
+                            onMovieClick = { movie -> navController.navigate(movie.toRoute()) },
+                            onTvShowClick = { show -> navController.navigate(show.toRoute()) },
+                        )
+                    }
+
 //                    composable<SettingsRoute>(
 //                        enterTransition = { if (initialState.destination.isTopLevelTab()) EnterTransition.None else null },
 //                        exitTransition = { if (targetState.destination.isTopLevelTab()) ExitTransition.None else null },
@@ -136,22 +139,22 @@ fun App() {
 //                        val viewModel: SettingsViewModel = koinViewModel()
 //                        SettingsScreen(viewModel = viewModel)
 //                    };
-//
-//                    composable<MovieDetailRoute> { entry ->
-//                        val route: MovieDetailRoute = entry.toRoute()
-//                        val viewModel: MovieDetailViewModel =
-//                            koinViewModel(
-//                                key = route.id.toString(),
-//                                parameters = { parametersOf(route.id) },
-//                            )
-//                        MovieDetailScreen(
-//                            viewModel = viewModel,
-//                            movie = route.toUiModel(),
-//                            onBack = { navController.navigateUp() },
-//                            onMovieClick = { movie -> navController.navigate(movie.toRoute()) },
-//                            onPersonClick = { person -> navController.navigate(person.toRoute()) },
-//                        )
-//                    }
+
+                    composable<MovieDetailRoute> { entry ->
+                        val route: MovieDetailRoute = entry.toRoute()
+                        val viewModel: MovieDetailViewModel =
+                            koinViewModel(
+                                key = route.id.toString(),
+                                parameters = { parametersOf(route.id) },
+                            )
+                        MovieDetailScreen(
+                            viewModel = viewModel,
+                            movie = route.toUiModel(),
+                            onBack = { navController.navigateUp() },
+                            onMovieClick = { movie -> navController.navigate(movie.toRoute()) },
+                            onPersonClick = { person -> navController.navigate(person.toRoute()) },
+                        )
+                    }
 //
 //                    composable<PersonDetailRoute> { entry ->
 //                        val route: PersonDetailRoute = entry.toRoute()

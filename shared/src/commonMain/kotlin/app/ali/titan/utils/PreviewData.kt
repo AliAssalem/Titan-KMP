@@ -1,7 +1,13 @@
 package app.ali.titan.utils
 
+import app.ali.titan.screens.movies.MovieDetailUiModel
 import app.ali.titan.screens.movies.data.Movie
 import app.ali.titan.screens.movies.toUiModel
+import app.ali.titan.screens.person.PersonDetailUiModel
+import app.ali.titan.screens.person.PersonMovieFilmographyItem
+import app.ali.titan.screens.person.PersonSummaryUiModel
+import app.ali.titan.screens.person.PersonTvFilmographyItem
+import app.ali.titan.screens.shows.TvShowUiModel
 import app.ali.titan.shared.CastMemberUiModel
 import app.ali.titan.shared.ReviewUiModel
 import app.ali.titan.shared.TrailerUiModel
@@ -121,70 +127,70 @@ internal val previewWatchProviders =
         WatchProviderUiModel(name = "Apple TV+", logoUrl = null),
     )
 
-//internal val previewPersonSummaryUiModel =
-//    PersonSummaryUiModel(
-//        id = 1,
-//        name = "Matthew McConaughey",
-//        profileUrl = null,
-//    )
-//
-//internal val previewPersonDetailUiModel =
-//    PersonDetailUiModel(
-//        id = 1,
-//        name = "Matthew McConaughey",
-//        biography =
-//            "Matthew David McConaughey is an American actor and producer. " +
-//                "He first gained notice for his breakout role in the coming-of-age comedy " +
-//                "Dazed and Confused (1993). His career has spanned over three decades.",
-//        birthday = "4 Nov 1969",
-//        placeOfBirth = "Uvalde, Texas, USA",
-//        knownForDepartment = "Acting",
-//        profileUrl = null,
-//        movieFilmography =
-//            previewMovieUiModels.take(3).mapIndexed { index, movie ->
-//                PersonMovieFilmographyItem(
-//                    movie = movie,
-//                    role = listOf("Cooper", "Ron Woodroof", "Rick Peck").getOrElse(index) { "" },
-//                )
-//            },
-//        tvFilmography =
-//            listOf(
-//                PersonTvFilmographyItem(
-//                    tvShow =
-//                        TvShowUiModel(
-//                            id = 1438,
-//                            name = "True Detective",
-//                            overview = "An anthology crime drama.",
-//                            firstAirDate = "12 Jan 2014",
-//                            voteAverage = "8.4",
-//                            backdropUrl = null,
-//                            posterUrl = null,
-//                        ),
-//                    role = "Rust Cohle",
-//                ),
-//            ),
-//    )
-//
-//internal val previewMovieDetailUiModel =
-//    MovieDetailUiModel(
-//        id = 1,
-//        title = "Interstellar",
-//        overview =
-//            "A team of explorers travel through a wormhole in space " +
-//                "in an attempt to ensure humanity's survival.",
-//        releaseDate = "5 Nov 2014",
-//        voteAverage = "8.6",
-//        voteCount = "34521",
-//        backdropUrl = null,
-//        posterUrl = null,
-//        runtime = "2h 49m",
-//        tagline = "Mankind was born on Earth. It was never meant to die here.",
-//        genres = "Adventure, Drama, Science Fiction",
-//        director = "Christopher Nolan",
-//        cast = previewCast,
-//        reviews = previewReviews,
-//        trailers = previewTrailers,
-//        similar = previewSimilarMovies,
-//        streamingProviders = previewWatchProviders,
-//        rentBuyProviders = previewWatchProviders.take(2),
-//    )
+internal val previewPersonSummaryUiModel =
+    PersonSummaryUiModel(
+        id = 1,
+        name = "Matthew McConaughey",
+        profileUrl = null,
+    )
+
+internal val previewPersonDetailUiModel =
+    PersonDetailUiModel(
+        id = 1,
+        name = "Matthew McConaughey",
+        biography =
+            "Matthew David McConaughey is an American actor and producer. " +
+                "He first gained notice for his breakout role in the coming-of-age comedy " +
+                "Dazed and Confused (1993). His career has spanned over three decades.",
+        birthday = "4 Nov 1969",
+        placeOfBirth = "Uvalde, Texas, USA",
+        knownForDepartment = "Acting",
+        profileUrl = null,
+        movieFilmography =
+            previewMovieUiModels.take(3).mapIndexed { index, movie ->
+                PersonMovieFilmographyItem(
+                    movie = movie,
+                    role = listOf("Cooper", "Ron Woodroof", "Rick Peck").getOrElse(index) { "" },
+                )
+            },
+        tvFilmography =
+            listOf(
+                PersonTvFilmographyItem(
+                    tvShow =
+                        TvShowUiModel(
+                            id = 1438,
+                            name = "True Detective",
+                            overview = "An anthology crime drama.",
+                            firstAirDate = "12 Jan 2014",
+                            voteAverage = "8.4",
+                            backdropUrl = null,
+                            posterUrl = null,
+                        ),
+                    role = "Rust Cohle",
+                ),
+            ),
+    )
+
+internal val previewMovieDetailUiModel =
+    MovieDetailUiModel(
+        id = 1,
+        title = "Interstellar",
+        overview =
+            "A team of explorers travel through a wormhole in space " +
+                "in an attempt to ensure humanity's survival.",
+        releaseDate = "5 Nov 2014",
+        voteAverage = "8.6",
+        voteCount = "34521",
+        backdropUrl = null,
+        posterUrl = null,
+        runtime = "2h 49m",
+        tagline = "Mankind was born on Earth. It was never meant to die here.",
+        genres = "Adventure, Drama, Science Fiction",
+        director = "Christopher Nolan",
+        cast = previewCast,
+        reviews = previewReviews,
+        trailers = previewTrailers,
+        similar = previewSimilarMovies,
+        streamingProviders = previewWatchProviders,
+        rentBuyProviders = previewWatchProviders.take(2),
+    )

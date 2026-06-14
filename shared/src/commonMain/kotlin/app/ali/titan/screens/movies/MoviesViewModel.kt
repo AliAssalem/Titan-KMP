@@ -2,16 +2,16 @@ package app.ali.titan.screens.movies
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.ali.titan.screens.configuration.LoadConfigurationUseCase
-import app.ali.titan.screens.filter.FilterPreferencesStore
-import app.ali.titan.screens.filter.MovieFilterPreferences
-import app.ali.titan.screens.filter.MovieSortOption
 import app.ali.titan.screens.movies.domain.DiscoverMoviesUseCase
 import app.ali.titan.screens.movies.domain.GetGenresUseCase
 import app.ali.titan.screens.movies.domain.GetPopularMoviesUseCase
 import app.ali.titan.screens.movies.domain.GetTrendingMoviesUseCase
 import app.ali.titan.screens.movies.domain.MoviesPage
 import app.ali.titan.screens.movies.domain.SearchMoviesUseCase
+import app.ali.titan.screens.configuration.LoadConfigurationUseCase
+import app.ali.titan.screens.filter.FilterPreferencesStore
+import app.ali.titan.screens.filter.MovieFilterPreferences
+import app.ali.titan.screens.filter.MovieSortOption
 import app.ali.titan.settings.SettingsPreferencesStore
 import app.ali.titan.utils.toAppError
 import kotlinx.coroutines.FlowPreview
@@ -29,13 +29,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 
 class MoviesViewModel(
-    private val getPopularMovies: GetPopularMoviesUseCase ,
+    private val getPopularMovies: GetPopularMoviesUseCase,
     private val getTrendingMovies: GetTrendingMoviesUseCase,
     private val searchMovies: SearchMoviesUseCase,
     private val discoverMovies: DiscoverMoviesUseCase,
     private val getGenres: GetGenresUseCase,
     private val loadConfiguration: LoadConfigurationUseCase,
-    private val filterPreferencesStore: FilterPreferencesStore ,
+    private val filterPreferencesStore: FilterPreferencesStore,
     private val settingsPreferencesStore: SettingsPreferencesStore,
 ) : ViewModel() {
     private val _state = MutableStateFlow(MoviesScreenState())
@@ -66,7 +66,8 @@ class MoviesViewModel(
         val prefs =
             MovieFilterPreferences(
                 selectedGenreId = genreId,
-                sortBy = MovieSortOption.entries.find { it.apiValue == sortApiValue } ?: MovieSortOption.POPULARITY,
+                sortBy = MovieSortOption.entries.find { it.apiValue == sortApiValue }
+                    ?: MovieSortOption.POPULARITY,
                 minRating = minRating,
             )
         viewModelScope.launch {
@@ -78,7 +79,7 @@ class MoviesViewModel(
 
     fun loadMovies() {
         viewModelScope.launch {
-            _state.update { it.copy(uiState = MoviesUiState .Loading) }
+            _state.update { it.copy(uiState = MoviesUiState.Loading) }
             try {
                 _state.update { it.copy(uiState = processPage(fetchPage())) }
             } catch (e: Exception) {
@@ -153,10 +154,12 @@ class MoviesViewModel(
                 loadGenresList()
                 supervisorScope {
                     val popularDeferred = async { fetchPage() }
-                    val trendingDeferred = async { runCatching { getTrendingMovies() }.getOrElse { emptyList() } }
+                    val trendingDeferred =
+                        async { runCatching { getTrendingMovies() }.getOrElse { emptyList() } }
                     val uiState = processPage(popularDeferred.await())
                     val trending = trendingDeferred.await()
-                    val featured = trending.ifEmpty { (uiState as? MoviesUiState.Success)?.movies.orEmpty() }
+                    val featured =
+                        trending.ifEmpty { (uiState as? MoviesUiState.Success)?.movies.orEmpty() }
                     _state.update { it.copy(uiState = uiState, featuredMovies = featured) }
                 }
             } catch (e: Exception) {

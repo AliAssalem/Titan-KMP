@@ -1,4 +1,4 @@
-package app.ali.titan.screens.movies.components
+package app.ali.titan.screens.shows.components
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Movie
+import androidx.compose.material.icons.filled.Tv
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -32,12 +32,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import app.ali.titan.screens.movies.MovieUiModel
+import app.ali.titan.screens.shows.TvShowUiModel
 import app.ali.titan.theme.SmoovieTheme
-import app.ali.titan.utils.previewMovieUiModels
 import coil3.compose.SubcomposeAsyncImage
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
@@ -52,14 +49,14 @@ private const val CARD_STAGGER_MS = 60
 private const val CARD_STAGGER_LIMIT = 5
 
 @Composable
-internal fun MovieCard(
-    movie: MovieUiModel,
+internal fun TvShowCard(
+    tvShow: TvShowUiModel,
     onClick: () -> Unit,
 ) {
     Card(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
         Row(modifier = Modifier.height(IMAGE_HEIGHT)) {
             SubcomposeAsyncImage(
-                model = movie.posterUrl,
+                model = tvShow.posterUrl,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 loading = { ImagePlaceholder() },
@@ -78,25 +75,25 @@ internal fun MovieCard(
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    MovieTitle(movie.title)
-                    MovieOverview(movie.overview)
+                    Title(tvShow.name)
+                    Overview(tvShow.overview)
                 }
-                Footer(movie)
+                Footer(tvShow)
             }
         }
     }
 }
 
 @Composable
-internal fun AnimatedMovieCard(
-    movie: MovieUiModel,
+internal fun AnimatedTvShowCard(
+    tvShow: TvShowUiModel,
     index: Int,
     skipAnimation: Boolean,
     onAnimationEnd: () -> Unit,
     onClick: () -> Unit,
 ) {
     if (index >= CARD_STAGGER_LIMIT || skipAnimation) {
-        MovieCard(movie = movie, onClick = onClick)
+        TvShowCard(tvShow = tvShow, onClick = onClick)
         return
     }
     var entered by remember { mutableStateOf(false) }
@@ -126,17 +123,17 @@ internal fun AnimatedMovieCard(
                     this.alpha = alpha
                 },
     ) {
-        MovieCard(movie = movie, onClick = onClick)
+        TvShowCard(tvShow = tvShow, onClick = onClick)
     }
 }
 
 @Composable
-private fun Footer(movie: MovieUiModel) {
+private fun Footer(tvShow: TvShowUiModel) {
     Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
             text =
-                if (movie.voteAverage.isNotBlank()) {
-                    "★ ${movie.voteAverage}"
+                if (tvShow.voteAverage.isNotBlank()) {
+                    "★ ${tvShow.voteAverage}"
                 } else {
                     "★ ${stringResource(Res.string.unrated)}"
                 },
@@ -144,7 +141,7 @@ private fun Footer(movie: MovieUiModel) {
         )
         Text(
             text =
-                movie.releaseDate.ifBlank {
+                tvShow.firstAirDate.ifBlank {
                     stringResource(Res.string.release_date_tba)
                 },
             style = MaterialTheme.typography.labelLarge,
@@ -153,7 +150,7 @@ private fun Footer(movie: MovieUiModel) {
 }
 
 @Composable
-private fun MovieOverview(overview: String) {
+private fun Overview(overview: String) {
     if (overview.isNotBlank()) {
         Text(
             text = overview,
@@ -172,9 +169,9 @@ private fun MovieOverview(overview: String) {
 }
 
 @Composable
-private fun MovieTitle(title: String) {
+private fun Title(name: String) {
     Text(
-        text = title,
+        text = name,
         style = MaterialTheme.typography.titleMedium,
         maxLines = 2,
         overflow = TextOverflow.Ellipsis,
@@ -191,21 +188,29 @@ private fun ImagePlaceholder() {
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            imageVector = Icons.Default.Movie,
+            imageVector = Icons.Default.Tv,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }
 
-private class MovieParameterProvider : PreviewParameterProvider<MovieUiModel> {
-    override val values = sequenceOf(previewMovieUiModels[0], previewMovieUiModels[3])
-}
-
 @PreviewLightDark
 @Composable
-private fun MovieCardPreview(
-    @PreviewParameter(MovieParameterProvider::class) movie: MovieUiModel,
-) {
-    SmoovieTheme { MovieCard(movie = movie, onClick = {}) }
+private fun TvShowCardPreview() {
+    SmoovieTheme {
+        TvShowCard(
+            tvShow =
+                TvShowUiModel(
+                    id = 1,
+                    name = "Breaking Bad",
+                    overview = "A high school chemistry teacher turned methamphetamine manufacturer.",
+                    firstAirDate = "20 Jan 2008",
+                    voteAverage = "9.5",
+                    backdropUrl = null,
+                    posterUrl = null,
+                ),
+            onClick = {},
+        )
+    }
 }

@@ -1,9 +1,7 @@
 package app.ali.titan.screens.movies
 
-import app.ali.titan.screens.configuration.ConfigurationStore
 import app.ali.titan.screens.movies.data.Movie
-
-
+import app.ali.titan.screens.configuration.ConfigurationStore
 
 class MovieUiMapper(
     private val configurationStore: ConfigurationStore,

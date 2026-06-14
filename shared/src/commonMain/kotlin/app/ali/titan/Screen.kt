@@ -2,6 +2,8 @@ package app.ali.titan
 
 
 import app.ali.titan.screens.movies.MovieUiModel
+import app.ali.titan.screens.person.PersonSummaryUiModel
+import app.ali.titan.screens.shows.TvShowUiModel
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -81,38 +83,38 @@ internal fun MovieDetailRoute.toUiModel() =
         posterUrl = posterUrl,
     )
 
-//internal fun PersonSummaryUiModel.toRoute() =
-//    PersonDetailRoute(
-//        id = id,
-//        name = name,
-//        profileUrl = profileUrl,
-//    )
-//
-//internal fun PersonDetailRoute.toUiModel() =
-//    PersonSummaryUiModel(
-//        id = id,
-//        name = name,
-//        profileUrl = profileUrl,
-//    )
-//
-//internal fun TvShowUiModel.toRoute() =
-//    TvShowDetailRoute(
-//        id = id,
-//        name = name,
-//        overview = overview,
-//        firstAirDate = firstAirDate,
-//        voteAverage = voteAverage,
-//        backdropUrl = backdropUrl,
-//        posterUrl = posterUrl,
-//    )
-//
-//internal fun TvShowDetailRoute.toUiModel() =
-//    TvShowUiModel(
-//        id = id,
-//        name = name,
-//        overview = overview,
-//        firstAirDate = firstAirDate,
-//        voteAverage = voteAverage,
-//        backdropUrl = backdropUrl,
-//        posterUrl = posterUrl,
-//    )
+internal fun PersonSummaryUiModel.toRoute() =
+    PersonDetailRoute(
+        id = id,
+        name = name,
+        profileUrl = profileUrl,
+    )
+
+internal fun PersonDetailRoute.toUiModel() =
+    PersonSummaryUiModel(
+        id = id,
+        name = name,
+        profileUrl = profileUrl,
+    )
+
+internal fun TvShowUiModel.toRoute() =
+    TvShowDetailRoute(
+        id = id,
+        name = name,
+        overview = overview,
+        firstAirDate = firstAirDate,
+        voteAverage = voteAverage,
+        backdropUrl = backdropUrl,
+        posterUrl = posterUrl,
+    )
+
+internal fun TvShowDetailRoute.toUiModel() =
+    TvShowUiModel(
+        id = id,
+        name = name,
+        overview = overview,
+        firstAirDate = firstAirDate,
+        voteAverage = voteAverage,
+        backdropUrl = backdropUrl,
+        posterUrl = posterUrl,
+    )

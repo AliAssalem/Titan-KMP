@@ -1,5 +1,6 @@
 package app.ali.titan
 
+import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import app.ali.titan.observability.Logger
 import app.ali.titan.observability.NapierKtorLogger
 import app.ali.titan.observability.NapierLogger
@@ -9,6 +10,7 @@ import app.ali.titan.screens.configuration.ConfigurationStore
 import app.ali.titan.screens.configuration.LoadConfigurationUseCase
 import app.ali.titan.screens.filter.FilterPreferencesStore
 import app.ali.titan.screens.filter.FilterPreferencesStoreImpl
+import app.ali.titan.screens.movies.MovieDetailViewModel
 import app.ali.titan.screens.movies.MovieUiMapper
 import app.ali.titan.screens.movies.MoviesViewModel
 import app.ali.titan.screens.movies.data.MoviesRepositoryImpl
@@ -19,8 +21,18 @@ import app.ali.titan.screens.movies.domain.GetPopularMoviesUseCase
 import app.ali.titan.screens.movies.domain.GetTrendingMoviesUseCase
 import app.ali.titan.screens.movies.domain.MoviesRepository
 import app.ali.titan.screens.movies.domain.SearchMoviesUseCase
+import app.ali.titan.screens.watchlist.WatchlistViewModel
+import app.ali.titan.screens.watchlist.data.WatchlistRepositoryImpl
+import app.ali.titan.screens.watchlist.domain.ObserveIsInWatchlistUseCase
+import app.ali.titan.screens.watchlist.domain.ObserveWatchlistUseCase
+import app.ali.titan.screens.watchlist.domain.RemoveFromWatchlistUseCase
+import app.ali.titan.screens.watchlist.domain.ToggleWatchlistUseCase
+import app.ali.titan.screens.watchlist.domain.WatchlistRepository
 import app.ali.titan.settings.SettingsPreferencesStore
 import app.ali.titan.settings.SettingsPreferencesStoreImpl
+import app.ali.titan.storage.DatabaseBuilderFactory
+import app.ali.titan.storage.MIGRATION_1_2
+import app.ali.titan.storage.SmoovieDatabase
 import dev.odaridavid.smoovie.observability.setCrashReportingEnabled
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -29,6 +41,7 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
@@ -87,6 +100,21 @@ private val appModule =
 
         single<FilterPreferencesStore> { FilterPreferencesStoreImpl(get()) }
 
+        single<SmoovieDatabase> {
+            get<DatabaseBuilderFactory>()
+                .create()
+                .addMigrations(MIGRATION_1_2)
+                .setDriver(BundledSQLiteDriver())
+                .setQueryCoroutineContext(Dispatchers.Default)
+                .build()
+        }
+        single { get<SmoovieDatabase>().watchlistDao() }
+        single<WatchlistRepository> { WatchlistRepositoryImpl(get()) }
+
+        single { ObserveIsInWatchlistUseCase(get()) }
+        single { ObserveWatchlistUseCase(get()) }
+        single { ToggleWatchlistUseCase(get()) }
+        single { RemoveFromWatchlistUseCase(get()) }
 
         viewModel {
             MoviesViewModel(
@@ -100,4 +128,16 @@ private val appModule =
                 settingsPreferencesStore = get(),
             )
         }
+
+        viewModel { (movieId: Int) ->
+            MovieDetailViewModel(
+                observeIsInWatchlist = get(),
+                movieId = movieId,
+                getMovieDetail = get(),
+                toggleWatchlistUseCase = get(),
+            )
+        }
+
+        viewModel { WatchlistViewModel(get(), get()) }
+
     }
