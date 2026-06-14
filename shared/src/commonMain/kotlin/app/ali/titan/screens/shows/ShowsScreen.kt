@@ -1,0 +1,378 @@
+package app.ali.titan.screens.shows
+
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.dp
+import app.ali.titan.screens.filter.FilterGenreOption
+import app.ali.titan.screens.filter.SortEntry
+import app.ali.titan.screens.filter.TvSortOption
+import app.ali.titan.screens.shows.components.FeaturedTvShowsPager
+import app.ali.titan.screens.shows.components.tvShowItems
+import app.ali.titan.theme.EmptyContent
+import app.ali.titan.theme.ErrorContent
+import app.ali.titan.theme.SearchToolbar
+import app.ali.titan.theme.ShimmerHero
+import app.ali.titan.theme.ShimmerList
+import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.ui.FilterSheet
+import app.ali.titan.ui.SearchBackHandler
+import app.ali.titan.ui.SetStatusBarIcons
+import app.ali.titan.utils.AppError
+import org.jetbrains.compose.resources.stringResource
+import titan.shared.generated.resources.Res
+import titan.shared.generated.resources.error_shows_failed
+import titan.shared.generated.resources.filter_button_description
+import titan.shared.generated.resources.media_type_tv_shows
+import titan.shared.generated.resources.search_shows_hint
+
+
+private const val SLOW_ANIM_DURATION = 500
+private const val FEATURED_COUNT = 4
+private val SHEET_OVERLAP = 28.dp
+private val SheetShape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)
+
+private val tvSortEntries = TvSortOption.entries.map { SortEntry(it.label, it.apiValue) }
+
+private data class ShowActions(
+    val onSearchQueryChanged: (String) -> Unit = {},
+    val onFilterApplied: (Int?, String, Float) -> Unit = { _, _, _ -> },
+    val onRetry: () -> Unit = {},
+    val onLoadMore: () -> Unit = {},
+    val onTvShowClick: (TvShowUiModel) -> Unit = {},
+)
+
+@Composable
+fun ShowsScreen(
+    viewModel: ShowsViewModel,
+    onTvShowClick: (TvShowUiModel) -> Unit = {},
+) {
+    val state by viewModel.state.collectAsState()
+    ShowsContent(
+        state = state,
+        actions =
+            ShowActions(
+                onSearchQueryChanged = viewModel::onSearchQueryChanged,
+                onFilterApplied = viewModel::onFilterApplied,
+                onRetry = viewModel::retry,
+                onLoadMore = viewModel::loadNextPage,
+                onTvShowClick = onTvShowClick,
+            ),
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ShowsContent(
+    state: ShowsScreenState,
+    actions: ShowActions,
+) {
+    var isSearchActive by rememberSaveable { mutableStateOf(false) }
+    var isFilterSheetVisible by remember { mutableStateOf(false) }
+    SearchBackHandler(enabled = isSearchActive) {
+        isSearchActive = false
+        actions.onSearchQueryChanged("")
+    }
+
+    val heroVisible =
+        !isSearchActive &&
+            state.uiState !is ShowsUiState.Error &&
+            (state.featuredTvShows.isNotEmpty() || state.uiState is ShowsUiState.Loading)
+    SetStatusBarIcons(useDarkIcons = !isSystemInDarkTheme() && !heroVisible)
+
+    val listState = rememberLazyListState()
+    val animatedIds = remember { mutableSetOf<Int>() }
+
+    val successState = state.uiState as? ShowsUiState.Success
+    val firstShowId = successState?.tvShows?.firstOrNull()?.id
+    LaunchedEffect(firstShowId) { animatedIds.clear() }
+
+    val shouldLoadMore by remember {
+        derivedStateOf {
+            val lastVisible =
+                listState.layoutInfo.visibleItemsInfo
+                    .lastOrNull()
+                    ?.index
+                    ?: return@derivedStateOf false
+            lastVisible >= listState.layoutInfo.totalItemsCount - 3
+        }
+    }
+    LaunchedEffect(shouldLoadMore) {
+        if (shouldLoadMore && successState?.hasMorePages == true && successState.isLoadingMore.not()) {
+            actions.onLoadMore()
+        }
+    }
+
+    val background = MaterialTheme.colorScheme.background
+
+    Scaffold(
+        contentWindowInsets = WindowInsets(0),
+        topBar = {
+            AnimatedContent(
+                targetState = isSearchActive,
+                transitionSpec = {
+                    (fadeIn(tween(350)) togetherWith fadeOut(tween(300)))
+                        .using(SizeTransform(clip = true))
+                },
+                label = "shows_topbar",
+            ) { searchActive ->
+                if (searchActive) {
+                    SearchToolbar(
+                        query = state.searchQuery,
+                        onQueryChanged = actions.onSearchQueryChanged,
+                        onClose = {
+                            isSearchActive = false
+                            actions.onSearchQueryChanged("")
+                        },
+                        placeholder = stringResource(Res.string.search_shows_hint),
+                    )
+                } else if (state.uiState is ShowsUiState.Error ||
+                    (state.featuredTvShows.isEmpty() && state.uiState !is ShowsUiState.Loading)
+                ) {
+                    CenterAlignedTopAppBar(
+                        title = { Text(text = stringResource(Res.string.media_type_tv_shows)) },
+                        actions = {
+                            Row {
+                                IconButton(onClick = { isSearchActive = true }) {
+                                    Icon(
+                                        imageVector = Icons.Default.Search,
+                                        contentDescription = stringResource(Res.string.search_shows_hint),
+                                    )
+                                }
+                                IconButton(onClick = { isFilterSheetVisible = true }) {
+                                    BadgedBox(badge = { if (state.filterPreferences.isActive) Badge() }) {
+                                        Icon(
+                                            imageVector = Icons.Default.Tune,
+                                            contentDescription = stringResource(Res.string.filter_button_description),
+                                        )
+                                    }
+                                }
+                            }
+                        },
+                    )
+                }
+            }
+        },
+    ) { padding ->
+        Column(modifier = Modifier.padding(padding).fillMaxSize()) {
+            AnimatedVisibility(
+                visible = heroVisible,
+                enter = expandVertically(tween(400)) + fadeIn(tween(400)),
+                exit = shrinkVertically(tween(350)) + fadeOut(tween(300)),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .layout { measurable, constraints ->
+                            val placeable = measurable.measure(constraints)
+                            val overlapPx = SHEET_OVERLAP.roundToPx()
+                            val reportedHeight = (placeable.height - overlapPx).coerceAtLeast(0)
+                            layout(placeable.width, reportedHeight) {
+                                placeable.place(0, 0)
+                            }
+                        },
+            ) {
+                AnimatedContent(
+                    targetState = state.featuredTvShows.isNotEmpty(),
+                    transitionSpec = {
+                        fadeIn(tween(SLOW_ANIM_DURATION)) togetherWith fadeOut(tween(SLOW_ANIM_DURATION))
+                    },
+                    label = "shows_featured",
+                ) { hasFeatured ->
+                    if (hasFeatured) {
+                        FeaturedTvShowsPager(
+                            tvShows = state.featuredTvShows.take(FEATURED_COUNT),
+                            onSearchClick = { isSearchActive = true },
+                            onFilterClick = { isFilterSheetVisible = true },
+                            isFilterActive = state.filterPreferences.isActive,
+                            onTvShowClick = actions.onTvShowClick,
+                        )
+                    } else {
+                        ShimmerHero(
+                            onSearchClick = { isSearchActive = true },
+                            onFilterClick = { isFilterSheetVisible = true },
+                            isFilterActive = state.filterPreferences.isActive,
+                        )
+                    }
+                }
+            }
+            Column(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(background, SheetShape)
+                        .padding(top = 12.dp),
+            ) {
+                AnimatedContent(
+                    targetState = state.uiState,
+                    transitionSpec = {
+                        fadeIn(tween(SLOW_ANIM_DURATION)) togetherWith fadeOut(tween(SLOW_ANIM_DURATION))
+                    },
+                    contentKey = { it::class },
+                    modifier = Modifier.weight(1f),
+                ) { uiState ->
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        when (uiState) {
+                            is ShowsUiState.Loading -> {
+                                ShimmerList(modifier = Modifier.fillMaxSize())
+                            }
+
+                            is ShowsUiState.Empty -> {
+                                EmptyContent(modifier = Modifier.align(Alignment.Center))
+                            }
+
+                            is ShowsUiState.Error -> {
+                                ErrorContent(
+                                    error = uiState.error,
+                                    onRetry = actions.onRetry,
+                                    modifier = Modifier.align(Alignment.Center),
+                                    title = stringResource(Res.string.error_shows_failed),
+                                )
+                            }
+
+                            is ShowsUiState.Success -> {
+                                LazyColumn(
+                                    state = listState,
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentPadding = PaddingValues(bottom = 16.dp),
+                                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                                ) {
+                                    tvShowItems(
+                                        tvShows = uiState.tvShows,
+                                        animatedIds = animatedIds,
+                                        isLoadingMore = uiState.isLoadingMore,
+                                        onTvShowClick = actions.onTvShowClick,
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (isFilterSheetVisible) {
+        val filter = state.filterPreferences
+        FilterSheet(
+            genres = state.genres.map { FilterGenreOption(it.id, it.name) },
+            sortEntries = tvSortEntries,
+            selectedGenreId = filter.selectedGenreId,
+            selectedSortApiValue = filter.sortBy.apiValue,
+            minRating = filter.minRating,
+            onApply = { genreId, sortEntry, rating ->
+                actions.onFilterApplied(genreId, sortEntry.apiValue, rating)
+                isFilterSheetVisible = false
+            },
+            onDismiss = { isFilterSheetVisible = false },
+        )
+    }
+}
+
+// region Previews
+
+private val previewTvShows =
+    listOf(
+        TvShowUiModel(
+            id = 1,
+            name = "Breaking Bad",
+            overview = "A high school chemistry teacher turned methamphetamine manufacturer.",
+            firstAirDate = "15 Jul 2016",
+            voteAverage = "9.5",
+            backdropUrl = null,
+            posterUrl = null,
+        ),
+        TvShowUiModel(
+            id = 2,
+            name = "Stranger Things",
+            overview = "When a young boy disappears, his friends uncover a mystery.",
+            firstAirDate = "15 Jul 2016",
+            voteAverage = "8.7",
+            backdropUrl = null,
+            posterUrl = null,
+        ),
+    )
+
+@PreviewLightDark
+@Composable
+private fun ShowsLoadingPreview() {
+    SmoovieTheme {
+        ShowsContent(
+            state = ShowsScreenState(uiState = ShowsUiState.Loading),
+            actions = ShowActions(),
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun ShowsSuccessPreview() {
+    SmoovieTheme {
+        ShowsContent(
+            state =
+                ShowsScreenState(
+                    uiState = ShowsUiState.Success(previewTvShows),
+                    featuredTvShows = previewTvShows,
+                ),
+            actions = ShowActions(),
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun ShowsErrorPreview() {
+    SmoovieTheme {
+        ShowsContent(
+            state = ShowsScreenState(uiState = ShowsUiState.Error(AppError.NetworkError)),
+            actions = ShowActions(),
+        )
+    }
+}
+
+// endregion

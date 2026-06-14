@@ -21,6 +21,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination
@@ -41,8 +42,18 @@ import app.ali.titan.screens.person.PersonDetailViewModel
 import app.ali.titan.screens.person.PersonFilmographyMediaType
 import app.ali.titan.screens.person.PersonFilmographyScreen
 import app.ali.titan.screens.person.PersonFilmographyViewModel
+import app.ali.titan.screens.shows.SeasonDetailScreen
+import app.ali.titan.screens.shows.SeasonDetailViewModel
+import app.ali.titan.screens.shows.ShowsScreen
+import app.ali.titan.screens.shows.ShowsViewModel
+import app.ali.titan.screens.shows.TvShowDetailScreen
+import app.ali.titan.screens.shows.TvShowDetailViewModel
 import app.ali.titan.screens.watchlist.WatchlistScreen
 import app.ali.titan.screens.watchlist.WatchlistViewModel
+import app.ali.titan.settings.CrashReportingConsentViewModel
+import app.ali.titan.settings.SettingsScreen
+import app.ali.titan.settings.SettingsViewModel
+import app.ali.titan.settings.components.CrashReportingConsentSheet
 import app.ali.titan.theme.SmoovieTheme
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -51,6 +62,7 @@ import titan.shared.generated.resources.Res
 import titan.shared.generated.resources.media_type_movies
 import titan.shared.generated.resources.media_type_tv_shows
 import titan.shared.generated.resources.settings_title
+import titan.shared.generated.resources.tv_show_year_range_present
 import titan.shared.generated.resources.watchlist_title
 
 private const val TRANSITION_DURATION_MS = 500
@@ -64,8 +76,8 @@ fun App() {
             val navController = rememberNavController()
             val currentBackStackEntry by navController.currentBackStackEntryAsState()
             val currentDestination = currentBackStackEntry?.destination
-            //val crashReportingConsentViewModel: CrashReportingConsentViewModel = koinViewModel()
-           // val isConsentSheetVisible by crashReportingConsentViewModel.isVisible.collectAsState()
+            val crashReportingConsentViewModel: CrashReportingConsentViewModel = koinViewModel()
+            val isConsentSheetVisible by crashReportingConsentViewModel.isVisible.collectAsState()
 
             Scaffold(
                 contentWindowInsets = WindowInsets(0),
@@ -107,19 +119,19 @@ fun App() {
                             onMovieClick = { movie -> navController.navigate(movie.toRoute()) },
                         )
                     }
-//
-//                    composable<ShowsRoute>(
-//                        enterTransition = { if (initialState.destination.isTopLevelTab()) EnterTransition.None else null },
-//                        exitTransition = { if (targetState.destination.isTopLevelTab()) ExitTransition.None else null },
-//                        popEnterTransition = { if (initialState.destination.isTopLevelTab()) EnterTransition.None else null },
-//                        popExitTransition = { if (targetState.destination.isTopLevelTab()) ExitTransition.None else null },
-//                    ) {
-//                        val viewModel: ShowsViewModel = koinViewModel()
-//                        ShowsScreen(
-//                            viewModel = viewModel,
-//                            onTvShowClick = { show -> navController.navigate(show.toRoute()) },
-//                        )
-//                    }
+
+                    composable<ShowsRoute>(
+                        enterTransition = { if (initialState.destination.isTopLevelTab()) EnterTransition.None else null },
+                        exitTransition = { if (targetState.destination.isTopLevelTab()) ExitTransition.None else null },
+                        popEnterTransition = { if (initialState.destination.isTopLevelTab()) EnterTransition.None else null },
+                        popExitTransition = { if (targetState.destination.isTopLevelTab()) ExitTransition.None else null },
+                    ) {
+                        val viewModel: ShowsViewModel = koinViewModel()
+                        ShowsScreen(
+                            viewModel = viewModel,
+                            onTvShowClick = { show -> navController.navigate(show.toRoute()) },
+                        )
+                    }
 
                     composable<WatchlistRoute>(
                         enterTransition = { if (initialState.destination.isTopLevelTab()) EnterTransition.None else null },
@@ -135,15 +147,15 @@ fun App() {
                         )
                     }
 
-//                    composable<SettingsRoute>(
-//                        enterTransition = { if (initialState.destination.isTopLevelTab()) EnterTransition.None else null },
-//                        exitTransition = { if (targetState.destination.isTopLevelTab()) ExitTransition.None else null },
-//                        popEnterTransition = { if (initialState.destination.isTopLevelTab()) EnterTransition.None else null },
-//                        popExitTransition = { if (targetState.destination.isTopLevelTab()) ExitTransition.None else null },
-//                    ) {
-//                        val viewModel: SettingsViewModel = koinViewModel()
-//                        SettingsScreen(viewModel = viewModel)
-//                    };
+                    composable<SettingsRoute>(
+                        enterTransition = { if (initialState.destination.isTopLevelTab()) EnterTransition.None else null },
+                        exitTransition = { if (targetState.destination.isTopLevelTab()) ExitTransition.None else null },
+                        popEnterTransition = { if (initialState.destination.isTopLevelTab()) EnterTransition.None else null },
+                        popExitTransition = { if (targetState.destination.isTopLevelTab()) ExitTransition.None else null },
+                    ) {
+                        val viewModel: SettingsViewModel = koinViewModel()
+                        SettingsScreen(viewModel = viewModel)
+                    };
 
                     composable<MovieDetailRoute> { entry ->
                         val route: MovieDetailRoute = entry.toRoute()
@@ -204,54 +216,54 @@ fun App() {
                         )
                     }
 
-//                    composable<TvShowDetailRoute> { entry ->
-//                        val route: TvShowDetailRoute = entry.toRoute()
-//                        val presentLabel = stringResource(Res.string.tv_show_year_range_present)
-//                        val viewModel: TvShowDetailViewModel =
-//                            koinViewModel(
-//                                key = "tv_${route.id}",
-//                                parameters = { parametersOf(route.id, presentLabel) },
-//                            )
-//                        TvShowDetailScreen(
-//                            viewModel = viewModel,
-//                            tvShow = route.toUiModel(),
-//                            onBack = { navController.navigateUp() },
-//                            onTvShowClick = { show -> navController.navigate(show.toRoute()) },
-//                            onPersonClick = { person -> navController.navigate(person.toRoute()) },
-//                            onSeasonClick = { season ->
-//                                navController.navigate(
-//                                    TvSeasonDetailRoute(
-//                                        tvShowId = route.id,
-//                                        seasonNumber = season.seasonNumber,
-//                                        seasonName = season.name,
-//                                    ),
-//                                )
-//                            },
-//                        )
-//                    }
-//
-//                    composable<TvSeasonDetailRoute> { entry ->
-//                        val route: TvSeasonDetailRoute = entry.toRoute()
-//                        val viewModel: SeasonDetailViewModel =
-//                            koinViewModel(
-//                                key = "season_${route.tvShowId}_${route.seasonNumber}",
-//                                parameters = { parametersOf(route.tvShowId, route.seasonNumber) },
-//                            )
-//                        SeasonDetailScreen(
-//                            viewModel = viewModel,
-//                            seasonName = route.seasonName,
-//                            onBack = { navController.navigateUp() },
-//                        )
-//                    }
+                    composable<TvShowDetailRoute> { entry ->
+                        val route: TvShowDetailRoute = entry.toRoute()
+                        val presentLabel = stringResource(Res.string.tv_show_year_range_present)
+                        val viewModel: TvShowDetailViewModel =
+                            koinViewModel(
+                                key = "tv_${route.id}",
+                                parameters = { parametersOf(route.id, presentLabel) },
+                            )
+                        TvShowDetailScreen(
+                            viewModel = viewModel,
+                            tvShow = route.toUiModel(),
+                            onBack = { navController.navigateUp() },
+                            onTvShowClick = { show -> navController.navigate(show.toRoute()) },
+                            onPersonClick = { person -> navController.navigate(person.toRoute()) },
+                            onSeasonClick = { season ->
+                                navController.navigate(
+                                    TvSeasonDetailRoute(
+                                        tvShowId = route.id,
+                                        seasonNumber = season.seasonNumber,
+                                        seasonName = season.name,
+                                    ),
+                                )
+                            },
+                        )
+                    }
+
+                    composable<TvSeasonDetailRoute> { entry ->
+                        val route: TvSeasonDetailRoute = entry.toRoute()
+                        val viewModel: SeasonDetailViewModel =
+                            koinViewModel(
+                                key = "season_${route.tvShowId}_${route.seasonNumber}",
+                                parameters = { parametersOf(route.tvShowId, route.seasonNumber) },
+                            )
+                        SeasonDetailScreen(
+                            viewModel = viewModel,
+                            seasonName = route.seasonName,
+                            onBack = { navController.navigateUp() },
+                        )
+                    }
                 }
             }
 
-//            if (isConsentSheetVisible) {
-//                CrashReportingConsentSheet(
-//                    onEnable = crashReportingConsentViewModel::onEnable,
-//                    onDecline = crashReportingConsentViewModel::onDecline,
-//                )
-//            }
+            if (isConsentSheetVisible) {
+                CrashReportingConsentSheet(
+                    onEnable = crashReportingConsentViewModel::onEnable,
+                    onDecline = crashReportingConsentViewModel::onDecline,
+                )
+            }
         }
     }
 }

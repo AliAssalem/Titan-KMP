@@ -26,6 +26,18 @@ import app.ali.titan.screens.person.PersonFilmographyViewModel
 import app.ali.titan.screens.person.data.PersonRepositoryImpl
 import app.ali.titan.screens.person.domain.GetPersonDetailUseCase
 import app.ali.titan.screens.person.domain.PersonRepository
+import app.ali.titan.screens.shows.SeasonDetailViewModel
+import app.ali.titan.screens.shows.ShowsViewModel
+import app.ali.titan.screens.shows.TvShowDetailViewModel
+import app.ali.titan.screens.shows.TvShowUiMapper
+import app.ali.titan.screens.shows.data.TvShowsRepositoryImpl
+import app.ali.titan.screens.shows.domain.DiscoverTvShowsUseCase
+import app.ali.titan.screens.shows.domain.GetPopularTvShowsUseCase
+import app.ali.titan.screens.shows.domain.GetSeasonDetailUseCase
+import app.ali.titan.screens.shows.domain.GetTvGenresUseCase
+import app.ali.titan.screens.shows.domain.GetTvShowDetailUseCase
+import app.ali.titan.screens.shows.domain.SearchTvShowsUseCase
+import app.ali.titan.screens.shows.domain.TvShowsRepository
 import app.ali.titan.screens.watchlist.WatchlistViewModel
 import app.ali.titan.screens.watchlist.data.WatchlistRepositoryImpl
 import app.ali.titan.screens.watchlist.domain.ObserveIsInWatchlistUseCase
@@ -33,8 +45,10 @@ import app.ali.titan.screens.watchlist.domain.ObserveWatchlistUseCase
 import app.ali.titan.screens.watchlist.domain.RemoveFromWatchlistUseCase
 import app.ali.titan.screens.watchlist.domain.ToggleWatchlistUseCase
 import app.ali.titan.screens.watchlist.domain.WatchlistRepository
+import app.ali.titan.settings.CrashReportingConsentViewModel
 import app.ali.titan.settings.SettingsPreferencesStore
 import app.ali.titan.settings.SettingsPreferencesStoreImpl
+import app.ali.titan.settings.SettingsViewModel
 import app.ali.titan.storage.DatabaseBuilderFactory
 import app.ali.titan.storage.MIGRATION_1_2
 import app.ali.titan.storage.SmoovieDatabase
@@ -94,8 +108,14 @@ private val appModule =
         single<SettingsPreferencesStore> { SettingsPreferencesStoreImpl(get()) }
         single<MoviesRepository> { MoviesRepositoryImpl(get(), get()) }
         single<PersonRepository> { PersonRepositoryImpl(get()) }
+        single<TvShowsRepository> { TvShowsRepositoryImpl(get(), get()) }
+
+        single<FilterPreferencesStore> { FilterPreferencesStoreImpl(get()) }
+        single { GetPersonDetailUseCase(get(), get()) }
 
         single { MovieUiMapper(get()) }
+        single { TvShowUiMapper(get()) }
+
         single { LoadConfigurationUseCase(get(), get()) }
         single { GetPopularMoviesUseCase(get(), get()) }
         single { SearchMoviesUseCase(get(), get()) }
@@ -104,7 +124,12 @@ private val appModule =
         single { GetMovieDetailUseCase(get(), get(), get()) }
         single { GetTrendingMoviesUseCase(get(), get()) }
 
-        single<FilterPreferencesStore> { FilterPreferencesStoreImpl(get()) }
+        single { GetPopularTvShowsUseCase(get(), get()) }
+        single { SearchTvShowsUseCase(get(), get()) }
+        single { DiscoverTvShowsUseCase(get(), get()) }
+        single { GetTvGenresUseCase(get()) }
+        single { GetTvShowDetailUseCase(get(), get(), get()) }
+        single { GetSeasonDetailUseCase(get(), get()) }
 
         single<SmoovieDatabase> {
             get<DatabaseBuilderFactory>()
@@ -116,8 +141,6 @@ private val appModule =
         }
         single { get<SmoovieDatabase>().watchlistDao() }
         single<WatchlistRepository> { WatchlistRepositoryImpl(get()) }
-
-        single { GetPersonDetailUseCase(get(), get()) }
 
         single { ObserveIsInWatchlistUseCase(get()) }
         single { ObserveWatchlistUseCase(get()) }
@@ -145,6 +168,36 @@ private val appModule =
                 toggleWatchlistUseCase = get(),
             )
         }
+        viewModel {
+            ShowsViewModel(
+                getPopularTvShows = get(),
+                searchTvShows = get(),
+                discoverTvShows = get(),
+                getTvGenres = get(),
+                loadConfiguration = get(),
+                filterPreferencesStore = get(),
+                settingsPreferencesStore = get(),
+            )
+        }
+        viewModel { (tvShowId: Int, presentLabel: String) ->
+            TvShowDetailViewModel(
+                tvShowId = tvShowId,
+                presentLabel = presentLabel,
+                getTvShowDetail = get(),
+                observeIsInWatchlist = get(),
+                toggleWatchlistUseCase = get(),
+            )
+        }
+        viewModel { (tvShowId: Int, seasonNumber: Int) ->
+            SeasonDetailViewModel(
+                tvShowId = tvShowId,
+                seasonNumber = seasonNumber,
+                getSeasonDetail = get(),
+            )
+        }
+        viewModel { SettingsViewModel(get()) }
+        viewModel { CrashReportingConsentViewModel(get()) }
+
         viewModel { (personId: Int) -> PersonDetailViewModel(personId, get()) }
         viewModel { (personId: Int) -> PersonFilmographyViewModel(personId, get()) }
         viewModel { WatchlistViewModel(get(), get()) }
