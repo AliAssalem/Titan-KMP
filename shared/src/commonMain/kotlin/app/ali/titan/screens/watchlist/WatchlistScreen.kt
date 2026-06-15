@@ -49,7 +49,7 @@ import app.ali.titan.screens.movies.components.MovieCard
 import app.ali.titan.screens.shows.TvShowUiModel
 import app.ali.titan.screens.shows.components.TvShowCard
 import app.ali.titan.theme.EmptyContent
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import app.ali.titan.ui.SetStatusBarIcons
 import app.ali.titan.utils.previewMovieUiModels
 import kotlinx.coroutines.delay
@@ -257,7 +257,7 @@ private fun WatchlistRow(
 @PreviewLightDark
 @Composable
 private fun WatchlistEmptyPreview() {
-    SmoovieTheme {
+    TitanTheme {
         WatchlistContent(state = WatchlistUiState.Empty, onMovieClick = {})
     }
 }
@@ -265,7 +265,7 @@ private fun WatchlistEmptyPreview() {
 @PreviewLightDark
 @Composable
 private fun WatchlistLoadedPreview() {
-    SmoovieTheme {
+    TitanTheme {
         WatchlistContent(
             state =
                 WatchlistUiState.Loaded(
@@ -280,7 +280,7 @@ private fun WatchlistLoadedPreview() {
 @PreviewLightDark
 @Composable
 private fun WatchlistLoadedEmptyFilterPreview() {
-    SmoovieTheme {
+    TitanTheme {
         WatchlistContent(
             state =
                 WatchlistUiState.Loaded(

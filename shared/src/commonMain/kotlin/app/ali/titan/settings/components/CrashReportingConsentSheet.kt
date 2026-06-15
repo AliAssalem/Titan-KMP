@@ -23,7 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import org.jetbrains.compose.resources.stringResource
 import titan.shared.generated.resources.Res
 import titan.shared.generated.resources.crash_consent_body
@@ -95,7 +95,7 @@ internal fun CrashReportingConsentSheet(
 @PreviewLightDark
 @Composable
 private fun CrashReportingConsentSheetPreview() {
-    SmoovieTheme {
+    TitanTheme {
         CrashReportingConsentSheet(
             onEnable = {},
             onDecline = {},

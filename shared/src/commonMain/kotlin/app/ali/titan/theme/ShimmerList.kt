@@ -253,7 +253,7 @@ private fun ShimmerMovieCard(brush: Brush) {
 @PreviewLightDark
 @Composable
 private fun ShimmerListPreview() {
-    SmoovieTheme {
+    TitanTheme {
         ShimmerList(modifier = Modifier.fillMaxSize())
     }
 }

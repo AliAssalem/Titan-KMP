@@ -54,7 +54,7 @@ import app.ali.titan.settings.CrashReportingConsentViewModel
 import app.ali.titan.settings.SettingsScreen
 import app.ali.titan.settings.SettingsViewModel
 import app.ali.titan.settings.components.CrashReportingConsentSheet
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
@@ -71,7 +71,7 @@ private val TransitionEasing = CubicBezierEasing(0.4f, 0.0f, 0.2f, 1.0f)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App() {
-    SmoovieTheme {
+    TitanTheme {
         Surface {
             val navController = rememberNavController()
             val currentBackStackEntry by navController.currentBackStackEntryAsState()

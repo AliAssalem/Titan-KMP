@@ -28,7 +28,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.ali.titan.screens.shows.EpisodeUiModel
 import app.ali.titan.theme.ExpandableText
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import coil3.compose.SubcomposeAsyncImage
 
 private val STILL_WIDTH = 128.dp
@@ -117,7 +117,7 @@ private fun StillPlaceholder() {
 @PreviewLightDark
 @Composable
 private fun EpisodeItemPreview() {
-    SmoovieTheme {
+    TitanTheme {
         Box(modifier = Modifier.padding(16.dp)) {
             EpisodeItem(
                 episode =

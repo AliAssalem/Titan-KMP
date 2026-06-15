@@ -41,7 +41,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.ali.titan.screens.movies.MovieUiModel
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import app.ali.titan.utils.previewMovieUiModels
 import coil3.compose.SubcomposeAsyncImage
 import kotlinx.coroutines.delay
@@ -232,7 +232,7 @@ private fun FeaturedPlaceholder() {
 @PreviewLightDark
 @Composable
 private fun FeaturedMoviesPagerPreview() {
-    SmoovieTheme {
+    TitanTheme {
         FeaturedMoviesPager(
             movies = previewMovieUiModels.take(4),
             onSearchClick = {},

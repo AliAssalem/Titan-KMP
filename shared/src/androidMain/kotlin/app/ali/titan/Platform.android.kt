@@ -13,7 +13,7 @@ actual val platformModule: Module =
         single { DatabaseBuilderFactory(androidContext()) }
         single<Settings> {
             SharedPreferencesSettings(
-                androidContext().getSharedPreferences("smoovie_filter", Context.MODE_PRIVATE),
+                androidContext().getSharedPreferences("titan_filter", Context.MODE_PRIVATE),
             )
         }
         //single { AndroidAppReviewRequester() }

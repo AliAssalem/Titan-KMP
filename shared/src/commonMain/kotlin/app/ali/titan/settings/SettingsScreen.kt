@@ -35,7 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.ali.titan.settings.components.RegionPickerSheet
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import app.ali.titan.ui.SetStatusBarIcons
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -257,7 +257,7 @@ private val previewVersion = AppVersion(name = "1.0", code = "1")
 @PreviewLightDark
 @Composable
 private fun SettingsContentDefaultPreview() {
-    SmoovieTheme {
+    TitanTheme {
         SettingsContent(
             state = SettingsUiState(selectedRegion = null, crashReportingEnabled = true),
             version = previewVersion,
@@ -270,7 +270,7 @@ private fun SettingsContentDefaultPreview() {
 @PreviewLightDark
 @Composable
 private fun SettingsContentSelectedPreview() {
-    SmoovieTheme {
+    TitanTheme {
         SettingsContent(
             state =
                 SettingsUiState(
@@ -287,7 +287,7 @@ private fun SettingsContentSelectedPreview() {
 @PreviewLightDark
 @Composable
 private fun SettingsContentCrashReportingOffPreview() {
-    SmoovieTheme {
+    TitanTheme {
         SettingsContent(
             state =
                 SettingsUiState(

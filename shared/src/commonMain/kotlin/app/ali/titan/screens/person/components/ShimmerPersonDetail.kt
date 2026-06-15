@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import app.ali.titan.theme.rememberShimmerBrush
 
 private val PHOTO_SIZE = 160.dp
@@ -186,7 +186,7 @@ private fun ShimmerFilmographyCard(brush: Brush) {
 @PreviewLightDark
 @Composable
 private fun ShimmerPersonDetailPreview() {
-    SmoovieTheme {
+    TitanTheme {
         ShimmerPersonDetail()
     }
 }

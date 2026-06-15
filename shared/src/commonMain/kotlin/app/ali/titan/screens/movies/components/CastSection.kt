@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.ali.titan.screens.person.PersonSummaryUiModel
 import app.ali.titan.shared.CastMemberUiModel
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import app.ali.titan.utils.previewCast
 import coil3.compose.SubcomposeAsyncImage
 import org.jetbrains.compose.resources.stringResource
@@ -136,7 +136,7 @@ private fun ProfilePlaceholder() {
 @PreviewLightDark
 @Composable
 private fun CastSectionPreview() {
-    SmoovieTheme {
+    TitanTheme {
         CastSection(cast = previewCast)
     }
 }

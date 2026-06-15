@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.ali.titan.settings.Region
 import app.ali.titan.settings.SUPPORTED_REGIONS
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import org.jetbrains.compose.resources.stringResource
 import titan.shared.generated.resources.Res
 import titan.shared.generated.resources.settings_region_sheet_title
@@ -87,7 +87,7 @@ internal fun RegionPickerSheet(
 @PreviewLightDark
 @Composable
 private fun RegionPickerSheetPreview() {
-    SmoovieTheme {
+    TitanTheme {
         RegionPickerSheet(
             regions = SUPPORTED_REGIONS,
             selectedRegionCode = "DE",

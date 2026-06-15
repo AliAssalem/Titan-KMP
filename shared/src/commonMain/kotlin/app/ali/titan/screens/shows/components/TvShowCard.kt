@@ -34,7 +34,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.ali.titan.screens.shows.TvShowUiModel
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import coil3.compose.SubcomposeAsyncImage
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
@@ -198,7 +198,7 @@ private fun ImagePlaceholder() {
 @PreviewLightDark
 @Composable
 private fun TvShowCardPreview() {
-    SmoovieTheme {
+    TitanTheme {
         TvShowCard(
             tvShow =
                 TvShowUiModel(

@@ -50,7 +50,7 @@ import app.ali.titan.theme.ErrorContent
 import app.ali.titan.theme.SearchToolbar
 import app.ali.titan.theme.ShimmerHero
 import app.ali.titan.theme.ShimmerList
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import app.ali.titan.ui.FilterSheet
 import app.ali.titan.ui.SearchBackHandler
 import app.ali.titan.ui.SetStatusBarIcons
@@ -288,7 +288,7 @@ private fun MoviesContent(
 @PreviewLightDark
 @Composable
 private fun MoviesLoadingPreview() {
-    SmoovieTheme {
+    TitanTheme {
         MoviesContent(
             state = MoviesScreenState(uiState = MoviesUiState.Loading),
             actions = MovieActions(),
@@ -299,7 +299,7 @@ private fun MoviesLoadingPreview() {
 @PreviewLightDark
 @Composable
 private fun MoviesSuccessPreview() {
-    SmoovieTheme {
+    TitanTheme {
         MoviesContent(
             state =
                 MoviesScreenState(
@@ -314,7 +314,7 @@ private fun MoviesSuccessPreview() {
 @PreviewLightDark
 @Composable
 private fun MoviesErrorPreview() {
-    SmoovieTheme {
+    TitanTheme {
         MoviesContent(
             state = MoviesScreenState(uiState = MoviesUiState.Error(AppError.NetworkError)),
             actions = MovieActions(),

@@ -132,7 +132,7 @@ internal fun ShimmerDetail(modifier: Modifier = Modifier) {
 @PreviewLightDark
 @Composable
 private fun ShimmerDetailPreview() {
-    SmoovieTheme {
+    TitanTheme {
         ShimmerDetail()
     }
 }

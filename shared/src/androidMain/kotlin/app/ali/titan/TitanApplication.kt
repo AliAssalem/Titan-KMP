@@ -4,13 +4,13 @@ import android.app.Application
 import app.ali.titan.observability.initLogger
 import org.koin.android.ext.koin.androidContext
 
-class SmoovieApplication : Application() {
+class TitanApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         initLogger(isDebug = BuildConfig.DEBUG)
         //initFirebase()
         initKoin {
-            androidContext(this@SmoovieApplication)
+            androidContext(this@TitanApplication)
         }
     }
     object BuildConfig {

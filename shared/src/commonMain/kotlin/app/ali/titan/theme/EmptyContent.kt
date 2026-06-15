@@ -52,7 +52,7 @@ fun EmptyContent(
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun EmptyContentPreview() {
-    SmoovieTheme {
+    TitanTheme {
         Scaffold {
             Box(modifier = Modifier.fillMaxSize()) {
                 EmptyContent(Modifier.align(Alignment.Center))

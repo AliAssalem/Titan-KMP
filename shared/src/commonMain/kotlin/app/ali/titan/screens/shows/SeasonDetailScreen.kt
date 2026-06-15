@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import app.ali.titan.screens.shows.components.EpisodeItem
 import app.ali.titan.theme.ErrorContent
 import app.ali.titan.theme.ExpandableText
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import app.ali.titan.ui.SetStatusBarIcons
 import org.jetbrains.compose.resources.stringResource
 import titan.shared.generated.resources.Res
@@ -189,7 +189,7 @@ private val previewSeasonDetail =
 @PreviewLightDark
 @Composable
 private fun SeasonDetailSuccessPreview() {
-    SmoovieTheme {
+    TitanTheme {
         SeasonDetailContent(
             seasonName = "Season 1",
             state = SeasonDetailUiState.Success(previewSeasonDetail),

@@ -51,7 +51,7 @@ import app.ali.titan.settings.SettingsPreferencesStoreImpl
 import app.ali.titan.settings.SettingsViewModel
 import app.ali.titan.storage.DatabaseBuilderFactory
 import app.ali.titan.storage.MIGRATION_1_2
-import app.ali.titan.storage.SmoovieDatabase
+import app.ali.titan.storage.TitanDatabase
 import dev.odaridavid.smoovie.observability.setCrashReportingEnabled
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -131,7 +131,7 @@ private val appModule =
         single { GetTvShowDetailUseCase(get(), get(), get()) }
         single { GetSeasonDetailUseCase(get(), get()) }
 
-        single<SmoovieDatabase> {
+        single<TitanDatabase> {
             get<DatabaseBuilderFactory>()
                 .create()
                 .addMigrations(MIGRATION_1_2)
@@ -139,7 +139,7 @@ private val appModule =
                 .setQueryCoroutineContext(Dispatchers.Default)
                 .build()
         }
-        single { get<SmoovieDatabase>().watchlistDao() }
+        single { get<TitanDatabase>().watchlistDao() }
         single<WatchlistRepository> { WatchlistRepositoryImpl(get()) }
 
         single { ObserveIsInWatchlistUseCase(get()) }

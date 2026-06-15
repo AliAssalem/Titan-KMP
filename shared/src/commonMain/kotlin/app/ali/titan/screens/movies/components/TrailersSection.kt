@@ -31,7 +31,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.ali.titan.shared.TrailerUiModel
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import app.ali.titan.utils.previewTrailers
 import coil3.compose.SubcomposeAsyncImage
 import org.jetbrains.compose.resources.stringResource
@@ -131,7 +131,7 @@ private const val THUMBNAIL_ASPECT_RATIO = 16f / 9f
 @PreviewLightDark
 @Composable
 private fun TrailersSectionPreview() {
-    SmoovieTheme {
+    TitanTheme {
         TrailersSection(
             trailers = previewTrailers,
             modifier = Modifier.padding(16.dp),

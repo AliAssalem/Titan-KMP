@@ -36,7 +36,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import app.ali.titan.screens.movies.MovieUiModel
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import app.ali.titan.utils.previewMovieUiModels
 import coil3.compose.SubcomposeAsyncImage
 import kotlinx.coroutines.delay
@@ -207,5 +207,5 @@ private class MovieParameterProvider : PreviewParameterProvider<MovieUiModel> {
 private fun MovieCardPreview(
     @PreviewParameter(MovieParameterProvider::class) movie: MovieUiModel,
 ) {
-    SmoovieTheme { MovieCard(movie = movie, onClick = {}) }
+    TitanTheme { MovieCard(movie = movie, onClick = {}) }
 }

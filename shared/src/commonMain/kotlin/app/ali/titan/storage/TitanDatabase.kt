@@ -8,15 +8,15 @@ import app.ali.titan.screens.watchlist.data.WatchlistDao
 import app.ali.titan.screens.watchlist.data.WatchlistItemEntity
 
 @Database(entities = [WatchlistItemEntity::class], version = 2, exportSchema = true)
-@ConstructedBy(SmoovieDatabaseConstructor::class)
-abstract class SmoovieDatabase : RoomDatabase() {
+@ConstructedBy(TitanDatabaseConstructor::class)
+abstract class TitanDatabase : RoomDatabase() {
     internal abstract fun watchlistDao(): WatchlistDao
 }
 
 // Room KSP generates the actual implementation for each target.
 @Suppress("NO_ACTUAL_FOR_EXPECT", "KotlinNoActualForExpect")
-expect object SmoovieDatabaseConstructor : RoomDatabaseConstructor<SmoovieDatabase> {
-    override fun initialize(): SmoovieDatabase
+expect object TitanDatabaseConstructor : RoomDatabaseConstructor<TitanDatabase> {
+    override fun initialize(): TitanDatabase
 }
 
-internal const val SMOOVIE_DATABASE_NAME = "smoovie.db"
+internal const val Titan_DATABASE_NAME = "titan.db"

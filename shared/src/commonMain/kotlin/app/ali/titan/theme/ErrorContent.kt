@@ -110,7 +110,7 @@ internal fun ErrorContent(
 @PreviewLightDark
 @Composable
 private fun ErrorContentPreview() {
-    SmoovieTheme {
+    TitanTheme {
         Scaffold {
             Box(modifier = Modifier.fillMaxSize()) {
                 ErrorContent(

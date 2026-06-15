@@ -33,7 +33,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.ali.titan.screens.filter.FilterGenreOption
 import app.ali.titan.screens.filter.SortEntry
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import org.jetbrains.compose.resources.stringResource
 import titan.shared.generated.resources.Res
 import titan.shared.generated.resources.filter_apply
@@ -206,7 +206,7 @@ private val previewSortEntries =
 @PreviewLightDark
 @Composable
 private fun FilterSheetDefaultPreview() {
-    SmoovieTheme {
+    TitanTheme {
         FilterSheet(
             genres = previewGenres,
             sortEntries = previewSortEntries,
@@ -223,7 +223,7 @@ private fun FilterSheetDefaultPreview() {
 @PreviewLightDark
 @Composable
 private fun FilterSheetActivePreview() {
-    SmoovieTheme {
+    TitanTheme {
         FilterSheet(
             genres = previewGenres,
             sortEntries = previewSortEntries,

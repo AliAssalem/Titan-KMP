@@ -32,7 +32,7 @@ import app.ali.titan.screens.shows.TvShowUiModel
 import app.ali.titan.theme.ErrorContent
 import app.ali.titan.theme.ExpandableText
 import app.ali.titan.theme.MetadataRow
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import app.ali.titan.ui.SetStatusBarIcons
 import app.ali.titan.utils.AppError
 import app.ali.titan.utils.previewPersonDetailUiModel
@@ -207,7 +207,7 @@ private fun DetailHeader(
 @PreviewLightDark
 @Composable
 private fun PersonDetailLoadingPreview() {
-    SmoovieTheme {
+    TitanTheme {
         PersonDetailContent(
             person = previewPersonSummaryUiModel,
             state = PersonDetailUiState.Loading,
@@ -220,7 +220,7 @@ private fun PersonDetailLoadingPreview() {
 @PreviewLightDark
 @Composable
 private fun PersonDetailSuccessPreview() {
-    SmoovieTheme {
+    TitanTheme {
         PersonDetailContent(
             person = previewPersonSummaryUiModel,
             state = PersonDetailUiState.Success(previewPersonDetailUiModel),
@@ -233,7 +233,7 @@ private fun PersonDetailSuccessPreview() {
 @PreviewLightDark
 @Composable
 private fun PersonDetailErrorPreview() {
-    SmoovieTheme {
+    TitanTheme {
         PersonDetailContent(
             person = previewPersonSummaryUiModel,
             state = PersonDetailUiState.Error(AppError.NetworkError),

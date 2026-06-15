@@ -22,7 +22,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.sp
 import app.ali.titan.theme.LobsterFontFamily
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import org.jetbrains.compose.resources.stringResource
 import titan.shared.generated.resources.Res
 import titan.shared.generated.resources.app_name
@@ -97,7 +97,7 @@ internal fun CollapsedToolbar(
 @PreviewLightDark
 @Composable
 private fun CollapsedToolbarPreview() {
-    SmoovieTheme {
+    TitanTheme {
         CollapsedToolbar(visible = true, onSearchClick = {})
     }
 }
@@ -105,7 +105,7 @@ private fun CollapsedToolbarPreview() {
 @PreviewLightDark
 @Composable
 private fun CollapsedToolbarFilterActivePreview() {
-    SmoovieTheme {
+    TitanTheme {
         CollapsedToolbar(visible = true, isFilterActive = true, onSearchClick = {}, onFilterClick = {})
     }
 }

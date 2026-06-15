@@ -28,7 +28,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.ali.titan.shared.ReviewUiModel
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import app.ali.titan.utils.previewReviews
 import org.jetbrains.compose.resources.stringResource
 import titan.shared.generated.resources.Res
@@ -146,7 +146,7 @@ private const val COLLAPSED_MAX_LINES = 4
 @PreviewLightDark
 @Composable
 private fun ReviewsSectionPreview() {
-    SmoovieTheme {
+    TitanTheme {
         ReviewsSection(
             reviews = previewReviews,
             modifier = Modifier.padding(16.dp),

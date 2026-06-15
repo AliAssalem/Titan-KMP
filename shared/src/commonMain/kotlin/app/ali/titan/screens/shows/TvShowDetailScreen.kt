@@ -37,7 +37,7 @@ import app.ali.titan.theme.HeroSection
 import app.ali.titan.theme.KeywordChips
 import app.ali.titan.theme.MetadataRow
 import app.ali.titan.theme.ShimmerDetail
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import app.ali.titan.ui.SetStatusBarIcons
 import app.ali.titan.utils.AppError
 import org.jetbrains.compose.resources.stringResource
@@ -346,7 +346,7 @@ private val previewTvShowDetail =
 @PreviewLightDark
 @Composable
 private fun TvShowDetailLoadingPreview() {
-    SmoovieTheme {
+    TitanTheme {
         TvShowDetailContent(
             tvShow = previewTvShow,
             detailState = TvShowDetailUiState.Loading,
@@ -359,7 +359,7 @@ private fun TvShowDetailLoadingPreview() {
 @PreviewLightDark
 @Composable
 private fun TvShowDetailSuccessPreview() {
-    SmoovieTheme {
+    TitanTheme {
         TvShowDetailContent(
             tvShow = previewTvShow,
             detailState = TvShowDetailUiState.Success(previewTvShowDetail),
@@ -372,7 +372,7 @@ private fun TvShowDetailSuccessPreview() {
 @PreviewLightDark
 @Composable
 private fun TvShowDetailErrorPreview() {
-    SmoovieTheme {
+    TitanTheme {
         TvShowDetailContent(
             tvShow = previewTvShow,
             detailState = TvShowDetailUiState.Error(AppError.NetworkError),

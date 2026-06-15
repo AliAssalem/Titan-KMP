@@ -76,7 +76,7 @@ fun ExpandableText(
 @PreviewLightDark
 @Composable
 private fun ExpandableTextShortPreview() {
-    SmoovieTheme {
+    TitanTheme {
         ExpandableText(
             text = "A brief description.",
             style = MaterialTheme.typography.bodyMedium,
@@ -87,7 +87,7 @@ private fun ExpandableTextShortPreview() {
 @PreviewLightDark
 @Composable
 private fun ExpandableTextLongPreview() {
-    SmoovieTheme {
+    TitanTheme {
         ExpandableText(
             text =
                 "Breaking Bad follows the transformation of Walter White, a high school chemistry teacher diagnosed " +

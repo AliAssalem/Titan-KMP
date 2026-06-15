@@ -36,7 +36,7 @@ import app.ali.titan.theme.HeroSection
 import app.ali.titan.theme.KeywordChips
 import app.ali.titan.theme.MetadataRow
 import app.ali.titan.theme.ShimmerDetail
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import app.ali.titan.ui.SetStatusBarIcons
 import app.ali.titan.utils.AppError
 import app.ali.titan.utils.previewMovieDetailUiModel
@@ -302,7 +302,7 @@ private fun ErrorBanner(
 @PreviewLightDark
 @Composable
 private fun MovieDetailLoadingPreview() {
-    SmoovieTheme {
+    TitanTheme {
         MovieDetailContent(
             movie = previewMovieUiModels[0],
             detailState = MovieDetailUiState.Loading,
@@ -315,7 +315,7 @@ private fun MovieDetailLoadingPreview() {
 @PreviewLightDark
 @Composable
 private fun MovieDetailSuccessPreview() {
-    SmoovieTheme {
+    TitanTheme {
         MovieDetailContent(
             movie = previewMovieUiModels[0],
             detailState = MovieDetailUiState.Success(previewMovieDetailUiModel),
@@ -328,7 +328,7 @@ private fun MovieDetailSuccessPreview() {
 @PreviewLightDark
 @Composable
 private fun MovieDetailErrorPreview() {
-    SmoovieTheme {
+    TitanTheme {
         MovieDetailContent(
             movie = previewMovieUiModels[0],
             detailState = MovieDetailUiState.Error(AppError.NetworkError),

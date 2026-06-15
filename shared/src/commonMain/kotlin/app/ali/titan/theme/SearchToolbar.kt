@@ -91,7 +91,7 @@ internal fun SearchToolbar(
 @PreviewLightDark
 @Composable
 private fun SearchToolbarPreview() {
-    SmoovieTheme {
+    TitanTheme {
         SearchToolbar(query = "", onQueryChanged = {}, onClose = {})
     }
 }

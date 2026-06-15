@@ -26,7 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.ali.titan.screens.shows.TvShowUiModel
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import coil3.compose.SubcomposeAsyncImage
 import org.jetbrains.compose.resources.stringResource
 import titan.shared.generated.resources.Res
@@ -112,7 +112,7 @@ private fun PosterPlaceholder() {
 @PreviewLightDark
 @Composable
 private fun SimilarTvShowsSectionPreview() {
-    SmoovieTheme {
+    TitanTheme {
         SimilarTvShowsSection(
             tvShows =
                 listOf(

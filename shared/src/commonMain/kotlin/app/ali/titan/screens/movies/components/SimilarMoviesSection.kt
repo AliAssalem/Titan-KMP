@@ -26,7 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.ali.titan.screens.movies.MovieUiModel
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import app.ali.titan.utils.previewMovieUiModels
 import coil3.compose.SubcomposeAsyncImage
 import org.jetbrains.compose.resources.stringResource
@@ -115,7 +115,7 @@ private const val POSTER_ASPECT_RATIO = 2f / 3f
 @PreviewLightDark
 @Composable
 private fun SimilarMoviesSectionPreview() {
-    SmoovieTheme {
+    TitanTheme {
         SimilarMoviesSection(
             movies = previewMovieUiModels.take(5),
             onMovieClick = {},

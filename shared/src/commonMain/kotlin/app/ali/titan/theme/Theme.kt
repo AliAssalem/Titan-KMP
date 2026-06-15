@@ -52,7 +52,7 @@ private val DarkColors =
     )
 
 @Composable
-fun SmoovieTheme(content: @Composable () -> Unit) {
+fun TitanTheme(content: @Composable () -> Unit) {
     MaterialTheme(
         colorScheme = if (isSystemInDarkTheme()) DarkColors else LightColors,
         content = content,

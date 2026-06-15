@@ -23,7 +23,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.ali.titan.shared.WatchProviderUiModel
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import app.ali.titan.utils.previewWatchProviders
 import coil3.compose.SubcomposeAsyncImage
 import org.jetbrains.compose.resources.stringResource
@@ -138,7 +138,7 @@ private val PROVIDER_LOGO_SIZE = 52.dp
 @PreviewLightDark
 @Composable
 private fun WhereToWatchSectionWithoutLinkPreview() {
-    SmoovieTheme {
+    TitanTheme {
         WhereToWatchSection(
             streamingProviders = previewWatchProviders,
             rentBuyProviders = previewWatchProviders.take(2),
@@ -151,7 +151,7 @@ private fun WhereToWatchSectionWithoutLinkPreview() {
 @PreviewLightDark
 @Composable
 private fun WhereToWatchSectionWithJustWatchLinkPreview() {
-    SmoovieTheme {
+    TitanTheme {
         WhereToWatchSection(
             streamingProviders = previewWatchProviders,
             rentBuyProviders = previewWatchProviders.take(2),

@@ -59,7 +59,7 @@ import app.ali.titan.theme.ErrorContent
 import app.ali.titan.theme.SearchToolbar
 import app.ali.titan.theme.ShimmerHero
 import app.ali.titan.theme.ShimmerList
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import app.ali.titan.ui.FilterSheet
 import app.ali.titan.ui.SearchBackHandler
 import app.ali.titan.ui.SetStatusBarIcons
@@ -341,7 +341,7 @@ private val previewTvShows =
 @PreviewLightDark
 @Composable
 private fun ShowsLoadingPreview() {
-    SmoovieTheme {
+    TitanTheme {
         ShowsContent(
             state = ShowsScreenState(uiState = ShowsUiState.Loading),
             actions = ShowActions(),
@@ -352,7 +352,7 @@ private fun ShowsLoadingPreview() {
 @PreviewLightDark
 @Composable
 private fun ShowsSuccessPreview() {
-    SmoovieTheme {
+    TitanTheme {
         ShowsContent(
             state =
                 ShowsScreenState(
@@ -367,7 +367,7 @@ private fun ShowsSuccessPreview() {
 @PreviewLightDark
 @Composable
 private fun ShowsErrorPreview() {
-    SmoovieTheme {
+    TitanTheme {
         ShowsContent(
             state = ShowsScreenState(uiState = ShowsUiState.Error(AppError.NetworkError)),
             actions = ShowActions(),

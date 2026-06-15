@@ -41,7 +41,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.ali.titan.screens.shows.TvShowUiModel
-import app.ali.titan.theme.SmoovieTheme
+import app.ali.titan.theme.TitanTheme
 import coil3.compose.SubcomposeAsyncImage
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
@@ -229,7 +229,7 @@ private fun FeaturedPlaceholder() {
 @PreviewLightDark
 @Composable
 private fun FeaturedTvShowsPagerPreview() {
-    SmoovieTheme {
+    TitanTheme {
         FeaturedTvShowsPager(
             tvShows =
                 listOf(

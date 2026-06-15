@@ -185,7 +185,7 @@ private fun BackdropPlaceholder() {
 @PreviewLightDark
 @Composable
 private fun HeroSectionPreview() {
-    SmoovieTheme {
+    TitanTheme {
         HeroSection(
             backdropUrl = null,
             posterUrl = null,
