@@ -1,3 +1,6 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -29,6 +32,11 @@ kotlin {
     }
 
     jvm("desktop")
+
+    wasmJs {
+        browser()
+        binaries.executable()
+    }
 
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
@@ -63,6 +71,7 @@ kotlin {
             implementation(libs.firebase.appcheck.playintegrity)
             implementation(libs.firebase.crashlytics)
             implementation(libs.play.review)
+            implementation(libs.androidx.sqlite.bundled)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -87,9 +96,10 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
             implementation(libs.androidx.room.runtime)
-            implementation(libs.androidx.sqlite.bundled)
+            //implementation(libs.androidx.sqlite.bundled)
             implementation(libs.multiplatform.settings)
             implementation(libs.napier)
+            implementation(libs.kotlinx.datetime)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -97,6 +107,11 @@ kotlin {
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
+            implementation(libs.androidx.sqlite.bundled)
+        }
+        wasmJsMain.dependencies {
+            implementation(libs.androidx.sqlite.web)
+            implementation(npm("sqlite-wasm-worker", File(rootDir, "sqliteWasmWorker").path))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -113,4 +128,5 @@ dependencies {
     add("kspAndroid", libs.androidx.room.compiler)
     add("kspIosArm64", libs.androidx.room.compiler)
     add("kspIosSimulatorArm64", libs.androidx.room.compiler)
+    add("kspWasmJs", libs.androidx.room.compiler)
 }

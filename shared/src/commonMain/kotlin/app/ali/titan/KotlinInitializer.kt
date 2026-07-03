@@ -1,6 +1,5 @@
 package app.ali.titan
 
-import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import app.ali.titan.observability.Logger
 import app.ali.titan.observability.NapierKtorLogger
 import app.ali.titan.observability.NapierLogger
@@ -52,6 +51,7 @@ import app.ali.titan.settings.SettingsViewModel
 import app.ali.titan.storage.DatabaseBuilderFactory
 import app.ali.titan.storage.MIGRATION_1_2
 import app.ali.titan.storage.TitanDatabase
+import app.ali.titan.storage.createSqliteDriver
 import dev.odaridavid.smoovie.observability.setCrashReportingEnabled
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -135,7 +135,7 @@ private val appModule =
             get<DatabaseBuilderFactory>()
                 .create()
                 .addMigrations(MIGRATION_1_2)
-                .setDriver(BundledSQLiteDriver())
+                .setDriver(createSqliteDriver())
                 .setQueryCoroutineContext(Dispatchers.Default)
                 .build()
         }
