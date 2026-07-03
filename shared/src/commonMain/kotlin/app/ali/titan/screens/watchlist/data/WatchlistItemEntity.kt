@@ -1,6 +1,6 @@
 package app.ali.titan.screens.watchlist.data
 
-import androidx.room.Entity
+import androidx.room3.Entity
 
 @Entity(
     tableName = "watchlist_items",

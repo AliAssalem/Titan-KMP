@@ -1,12 +1,12 @@
 package app.ali.titan.storage
 
-import androidx.room.migration.Migration
+import androidx.room3.migration.Migration
 import androidx.sqlite.SQLiteConnection
 import androidx.sqlite.execSQL
 
 internal val MIGRATION_1_2 =
     object : Migration(1, 2) {
-        override fun migrate(connection: SQLiteConnection) {
+        override suspend fun migrate(connection: SQLiteConnection) {
             connection.execSQL(
                 "CREATE TABLE IF NOT EXISTS `watchlist_items` (" +
                     "`id` INTEGER NOT NULL, " +

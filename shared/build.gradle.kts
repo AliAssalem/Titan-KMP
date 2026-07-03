@@ -8,11 +8,12 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.kover)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.androidxRoom)
+    //Room step2 -> plugins
+    alias(libs.plugins.ksp)//ksp for room annotation processing
+    alias(libs.plugins.androidxRoom3)
 }
 
-room {
+room3 {
     schemaDirectory("$projectDir/schemas")
 }
 
@@ -27,7 +28,7 @@ kotlin {
         }
     }
 
-    jvm()
+    jvm("desktop")
 
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
@@ -50,6 +51,7 @@ kotlin {
     }
 
     sourceSets {
+        val desktopMain by getting
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
@@ -92,6 +94,10 @@ kotlin {
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
         }
+        desktopMain.dependencies {
+            implementation(compose.desktop.currentOs)
+            implementation(libs.kotlinx.coroutinesSwing)
+        }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
             implementation(libs.kotlinx.coroutines.test)
@@ -103,6 +109,7 @@ kotlin {
 
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
+    add("kspDesktop", libs.androidx.room.compiler)
     add("kspAndroid", libs.androidx.room.compiler)
     add("kspIosArm64", libs.androidx.room.compiler)
     add("kspIosSimulatorArm64", libs.androidx.room.compiler)

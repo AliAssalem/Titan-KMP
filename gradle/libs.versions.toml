@@ -24,7 +24,7 @@ coil = "3.4.0"
 ksp = "2.3.9"
 ktor = "3.5.0"
 materialIconsExtended = "1.7.3"
-room = "2.8.4"
+room = "3.0.0"
 sqlite = "2.6.2"
 sqldelight = "2.1.0"
 multiplatformSettings = "1.3.0"
@@ -34,7 +34,7 @@ playReview = "2.0.2"
 firebaseCrashlyticsPlugin = "3.0.7"
 firebaseBom = "34.13.0"
 ktlint-gradle = "14.2.0"
-
+kotlinxCoroutinesSwing = "1.11.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -75,8 +75,8 @@ androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navi
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
-androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room-runtime = { module = "androidx.room3:room3-runtime", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room3:room3-compiler", version.ref = "room" }
 androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
 multiplatform-settings-test = { module = "com.russhwolf:multiplatform-settings-test", version.ref = "multiplatformSettings" }
@@ -100,7 +100,7 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-androidxRoom = { id = "androidx.room", version.ref = "room" }
+androidxRoom3 = { id = "androidx.room3", version.ref = "room" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-gradle" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 googleServices = { id = "com.google.gms.google-services", version.ref = "googleServices" }
