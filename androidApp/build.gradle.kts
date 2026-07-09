@@ -1,8 +1,9 @@
 import java.util.Properties
 
-//val keystoreProperties = Properties()
-//val keystorePropertiesFile = rootProject.file("keystore.properties")
-//keystoreProperties.load(keystorePropertiesFile.inputStream())
+val keystoreProperties = Properties()
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+keystoreProperties.load(keystorePropertiesFile.inputStream())
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
@@ -42,21 +43,21 @@ android {
         }
     }
 
-//    signingConfigs {
-//        create("release") {
-//            storeFile = file(keystoreProperties["storeFile"] as String)
-//            storePassword = keystoreProperties["storePassword"] as String
-//            keyAlias = keystoreProperties["keyAlias"] as String
-//            keyPassword = keystoreProperties["keyPassword"] as String
-//            storeType = "JKS"
-//        }
-//    }
+    signingConfigs {
+        create("release") {
+            storeFile = file(keystoreProperties["storeFile"] as String)
+            storePassword = keystoreProperties["storePassword"] as String
+            keyAlias = keystoreProperties["keyAlias"] as String
+            keyPassword = keystoreProperties["keyPassword"] as String
+            storeType = "JKS"
+        }
+    }
 
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
-            //signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
